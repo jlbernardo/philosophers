@@ -6,11 +6,11 @@
 /*   By: Juliany Bernardo <julberna@student.42sp    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 13:47:02 by Juliany Ber       #+#    #+#             */
-/*   Updated: 2024/03/11 13:47:35 by Juliany Ber      ###   ########.fr       */
+/*   Updated: 2024/03/11 14:50:36 by Juliany Ber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philo.h"
+#include "philo.h"
 
 size_t	atost(char *str)
 {

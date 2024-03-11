@@ -6,11 +6,11 @@
 /*   By: Juliany Bernardo <julberna@student.42sp    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 16:53:48 by Juliany Ber       #+#    #+#             */
-/*   Updated: 2024/03/11 13:47:20 by Juliany Ber      ###   ########.fr       */
+/*   Updated: 2024/03/11 14:50:40 by Juliany Ber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philo.h"
+#include "philo.h"
 
 void	initializer(t_data *philo, int argc, char **argv)
 {
