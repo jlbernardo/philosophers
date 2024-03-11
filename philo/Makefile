@@ -5,7 +5,7 @@ FLAGS	= -Wall -Wextra -Werror -g3
 
 INCLUDE	= -I
 
-SRC		= $(addprefix src/, philo.c)
+SRC		= $(addprefix src/, philo.c initializer.c checker.c error.c)
 OBJ		= $(SRC:src/%.c=obj/%.o)
 
 BLU		= \033[1;36m
