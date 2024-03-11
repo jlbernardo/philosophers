@@ -20,7 +20,7 @@ $(NAME): $(OBJ)
 /obj%.o:src/%.c
 	@echo "$(BLU) Compiling...$(WHT)"
 	@mkdir -p $(dir $@)
-	@(CC) $(FLAGS) $(INCLUDE) -c $< -o $@
+	@$(CC) $(FLAGS) $(INCLUDE) -c $< -o $@
 
 clean:
 	@rm -rf obj/
