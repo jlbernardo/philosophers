@@ -1,44 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker.c                                          :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Juliany Bernardo <julberna@student.42sp    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/10 16:43:08 by Juliany Ber       #+#    #+#             */
-/*   Updated: 2024/03/11 13:42:17 by Juliany Ber      ###   ########.fr       */
+/*   Created: 2024/03/11 13:47:02 by Juliany Ber       #+#    #+#             */
+/*   Updated: 2024/03/11 13:47:35 by Juliany Ber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-int	wrong_input(int argc, char **argv)
+size_t	atost(char *str)
 {
-	if (argc > 6 || argc < 5)
-		philerror(argc, ARGS);
-	else if (non_digits(argv))
-		philerror(argc, NON_DIGIT);
-	else
-		return (EXIT_SUCCESS);
-	return (EXIT_FAILURE);
-}
+	size_t	i;
+	size_t	num;
+	size_t	negative;
 
-int	non_digits(char **argv)
-{
-	int	i;
-	int	j;
-
-	i = 1;
-	while (argv[i])
+	i = 0;
+	num = 0;
+	negative = 0;
+	while ((str[i] > 8 && str[i] < 14) || str[i] == 32)
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while ((str[i] >= '0' && str[i] <= '9') && str[i] != '\0')
 	{
-		j = 0;
-		while (argv[i][j] != '\0')
-		{
-			if ((argv[i][j] < '0' || argv[i][j] > '9'))
-				return (true);
-			j++;
-		}
+		num = num * 10 + (str[i] - '0');
 		i++;
 	}
-	return (false);
+	if (negative == 1)
+		num = -num;
+	return (num);
+}
+
+int	len(const char *str)
+{
+	int	len;
+
+	len = 0;
+	while (str[len])
+		len++;
+	return (len);
 }

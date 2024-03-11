@@ -3,32 +3,34 @@ NAME	= philo
 CC		= cc
 FLAGS	= -Wall -Wextra -Werror -g3
 
-INCLUDE	= -I
+INCLUDE	= -I.
 
-SRC		= $(addprefix src/, philo.c initializer.c checker.c error.c)
+SRC		= $(addprefix src/, philo.c initializer.c checker.c error.c \
+							utils.c)
 OBJ		= $(SRC:src/%.c=obj/%.o)
 
 BLU		= \033[1;36m
-WHT		= \033[0m
+WHT		= \033[1;39m
+DFL		= \033[0m
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(CC) $(FLAGS) $(OBJ) $(INCLUDE) -o $(NAME)
-	@echo "$(BLU) All set up!\n Run: ./philo (nbr of philos) (time to die) (time to eat) (time to sleep) (nbr of meals, optional)$(WHT)"
+	@echo "$(BLU) Compiling...$(DFL)"
+	@$(CC) $(FLAGS) $(OBJ) $(INCLUDE) -lpthread -o $(NAME)
+	@echo "$(BLU) All set up!\n $(WHT)Run: ./philo [nº of philos] [time to die] [time to eat] [time to sleep] [nº of meals (optional)]$(DFL)"
 
-/obj%.o:src/%.c
-	@echo "$(BLU) Compiling...$(WHT)"
+obj/%.o:src/%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(FLAGS) $(INCLUDE) -c $< -o $@
 
 clean:
 	@rm -rf obj/
-	@echo "$(BLU) All objects were deleted.$(WHT)"
+	@echo "$(BLU) All objects were deleted.$(DFL)"
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "$(BLU) Binary deleted.$(WHT)"
+	@echo "$(BLU) Binary deleted.$(DFL)"
 
 re: fclean all
 
