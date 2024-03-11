@@ -12,12 +12,35 @@
 
 #include "philo.h"
 
-int	wrong_arguments(int argc)
+int	wrong_input(int argc, char **argv)
 {
 	if (argc > 6 || argc < 5)
+		philerror(argc, ARGS);
+	else if (non_digits(argv))
+		philerror(0, NON_DIGIT);
+	else if (negative(argv))
+		philerror(argc, NEGATIVE);
+	else
+		return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
+}
+
+int	non_digits(char *argv)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (argv[i])
 	{
-		philerror(argc);
-		return (EXIT_FAILURE);
+		j = 0;
+		while (argv[i][j])
+		{
+			if (argv[i][j] < '0' || argv[i][j] > '9')
+				return (true);
+			j++;
+		}
+		i++;
 	}
-	return (EXIT_SUCCESS);
+	return (false);
 }

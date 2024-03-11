@@ -27,17 +27,23 @@ typedef struct s_data
 	size_t			eat_time;
 	size_t			die_time;
 	size_t			sleep_time;
-	pthread_t		*thinker;
-	pthread_mutex_t	*hashi;
 }				t_data;
 
-// typedef struct s_tab
-// {
-// 	size_t			id;
-// 	size_t			meals;
-// 	size_t			last_meal;
-// 	pthread_mutex_t	hashi;
-// }				t_tab;
+typedef struct s_tab
+{
+	size_t			id;
+	size_t			meals;
+	size_t			last_meal;
+	struct s_data	*data:
+	pthread_t	philo;
+	pthread_mutex_t	hashi;
+}				t_tab;
+
+typedef enum e_error
+{
+	ARGS = 0,
+	NON_DIGIT
+};
 
 int		len(char *str);
 int		wrong_arguments(int argc);

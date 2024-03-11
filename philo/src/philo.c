@@ -16,7 +16,7 @@ int	main(int argc, char **argv)
 {
 	t_data	philo;
 
-	if (wrong_arguments(argc))
+	if (input_error(argc, argv))
 		return (EXIT_FAILURE);
 	initializer(&philo, argc, argv);
 }
