@@ -6,13 +6,13 @@
 /*   By: Juliany Bernardo <julberna@student.42sp    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 16:43:08 by Juliany Ber       #+#    #+#             */
-/*   Updated: 2024/03/11 14:50:31 by Juliany Ber      ###   ########.fr       */
+/*   Updated: 2024/03/11 21:07:11 by Juliany Ber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	wrong_input(int argc, char **argv)
+int	reservation_mistake(int argc, char **argv)
 {
 	if (non_digits(argv))
 		philerror(argc, NON_DIGIT);
@@ -41,4 +41,24 @@ int	non_digits(char **argv)
 		i++;
 	}
 	return (false);
+}
+
+int	restaurant_open(t_data *diner)
+{
+	size_t	i;
+	bool	open;
+
+	open = false;
+	i = 0;
+	while (i < diner->seats)
+	{
+		if (diner->philo[i].plates < diner->meals_hired
+			|| diner->meals_hired == __SIZE_MAX__)
+		{
+			open = true;
+			break ;
+		}
+		i++;
+	}
+	return (open);
 }

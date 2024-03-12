@@ -6,7 +6,7 @@
 /*   By: Juliany Bernardo <julberna@student.42sp    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 16:03:44 by Juliany Ber       #+#    #+#             */
-/*   Updated: 2024/03/11 13:35:03 by Juliany Ber      ###   ########.fr       */
+/*   Updated: 2024/03/11 21:05:30 by Juliany Ber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,40 +31,61 @@
 # define TOO_MANY	1
 # define NOT_NBR	2
 
+/* philo states */
+# define EAT		0
+# define SLEEP		1
+# define THINK		2
+# define GRAB		3
+
 typedef struct s_data
 {
-	size_t			meals;
-	size_t			guests;
+	size_t			seats;
 	size_t			eat_time;
 	size_t			die_time;
+	size_t			meals_hired;
 	size_t			sleep_time;
-	struct s_tab	*thinker;
+	pthread_t		waiter;
+	struct s_tab	*philo;
+	pthread_mutex_t	print;
 }				t_data;
 
 typedef struct s_tab
 {
 	size_t			id;
-	size_t			meals;
+	size_t			plates;
 	size_t			last_meal;
-	t_data			*data;
-	pthread_t		philo;
+	t_data			*diner;
+	pthread_t		guest;
 	pthread_mutex_t	hashi;
 }				t_tab;
 
 /* set up */
-void	init_guests_tab(t_data *philo);
-void	initializer(t_data *philo, int argc, char **argv);
+void	serve_tables(t_data *diner);
+void	register_guests(t_data *diner, int argc, char **argv);
 
 /* checker */
 int		non_digits(char **argv);
-int		wrong_input(int argc, char **argv);
+int		restaurant_open(t_data *diner);
+int		reservation_mistake(int argc, char **argv);
+
+/* dinner */
+void	*dinner(void *tab);
+void	close_diner(t_data *diner);
+
+/* philo actions */
+void	eat(t_tab *philo);
+void	nap(t_tab *philo);
+void	think(t_tab *philo);
+void	grab_hashis(t_tab *philo);
+void	drop_hashis(t_tab *philo);
 
 /* error */
 void	message(int flag);
 void	philerror(int args, int flag);
 
 /* auxiliary functions */
-int		len(const char *str);
 size_t	atost(char *str);
+int		len(const char *str);
+void	print_state(char *state, t_tab *philo);
 
 #endif
