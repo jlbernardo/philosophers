@@ -6,7 +6,7 @@
 /*   By: Juliany Bernardo <julberna@student.42sp    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:12:55 by Juliany Ber       #+#    #+#             */
-/*   Updated: 2024/03/13 00:38:00 by Juliany Ber      ###   ########.fr       */
+/*   Updated: 2024/03/13 01:04:06 by Juliany Ber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	serve_tables(t_data *diner)
 	}
 	i = 0;
 	printf("┌──────────────────────────────────┐\n");
+	printf("│ TIME    ID        ACTION         │\n");
+	printf("├──────────────────────────────────┤\n");
 	gettimeofday(&time, NULL);
 	diner->start = (time.tv_sec * 1000) + (time.tv_usec / 1000);
 	pthread_create(&diner->waiter, NULL, &restaurant_open, (void *)diner);
