@@ -6,7 +6,7 @@
 /*   By: Juliany Bernardo <julberna@student.42sp    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 13:47:02 by Juliany Ber       #+#    #+#             */
-/*   Updated: 2024/03/13 00:53:32 by Juliany Ber      ###   ########.fr       */
+/*   Updated: 2024/03/13 15:36:36 by Juliany Ber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ size_t	print_state(int state, t_tab *philo)
 	char		*s;
 	size_t		current_time;
 	const char	*message[5] = {
-		"is eating",
-		"is sleeping",
-		"is thinking",
-		"has taken a hashi",
-		"died",
+		"🤤 is eating",
+		"😪 is sleeping",
+		"🧐 is thinking",
+		"🥢 has taken a hashi",
+		"💀 died",
 	};
 
 	if (!diner_open(philo->diner))
@@ -31,7 +31,7 @@ size_t	print_state(int state, t_tab *philo)
 	s = " ";
 	current_time = simulation_time(philo->diner);
 	pthread_mutex_lock(&philo->diner->print);
-	printf("│ %zu%*s%zu%*s%-18s │\n", current_time, 8 - num_len(current_time),
+	printf("│ %zu%*s%zu%*s%-22s │\n", current_time, 8 - num_len(current_time),
 		s, philo->id, 6 - num_len(philo->id), s, message[state]);
 	pthread_mutex_unlock(&philo->diner->print);
 	return (current_time);
