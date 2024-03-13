@@ -6,7 +6,7 @@
 /*   By: Juliany Bernardo <julberna@student.42sp    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 13:47:02 by Juliany Ber       #+#    #+#             */
-/*   Updated: 2024/03/13 15:36:36 by Juliany Ber      ###   ########.fr       */
+/*   Updated: 2024/03/13 17:46:45 by Juliany Ber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,24 +83,4 @@ int	num_len(size_t nbr)
 		nbr /= 10;
 	}
 	return (len);
-}
-
-bool	non_digits(char **argv)
-{
-	int	i;
-	int	j;
-
-	i = 1;
-	while (argv[i])
-	{
-		j = 0;
-		while (argv[i][j] != '\0')
-		{
-			if ((argv[i][j] < '0' || argv[i][j] > '9'))
-				return (true);
-			j++;
-		}
-		i++;
-	}
-	return (false);
 }

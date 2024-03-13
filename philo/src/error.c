@@ -6,11 +6,22 @@
 /*   By: Juliany Bernardo <julberna@student.42sp    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 16:31:24 by Juliany Ber       #+#    #+#             */
-/*   Updated: 2024/03/12 23:42:51 by Juliany Ber      ###   ########.fr       */
+/*   Updated: 2024/03/13 16:52:38 by Juliany Ber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+bool	reservation_mistake(int argc, char **argv)
+{
+	if (non_digits(argv))
+		philerror(argc, NON_DIGIT);
+	else if (argc > 6 || argc < 5)
+		philerror(argc, ARGS);
+	else
+		return (false);
+	return (true);
+}
 
 void	philerror(int args, int flag)
 {
@@ -25,17 +36,34 @@ void	philerror(int args, int flag)
 void	message(int flag)
 {
 	const char	*msg[3] = {
-		"I think you forgot to provide some arguments.\n"
-		"Please, provide the amount of philosophers and how long "
-		"they take to die, to eat and to sleep.\nIn this order, "
-		"specifically. You can also specify how many "
-		"meals they should eat in total.\n",
-		"Only numbers are allowed as arguments.\nThere's no reason to use "
-		"positive or negative signs as time is only positive, right? :D\n",
-		"Seems like you gave me too many arguments.\nYou should only "
-		"provide number of philo and times to die, eat and sleep. "
-		"Number of meals too, if you prefer. Try again?\n",
+		"Use only numbers!\n\033[0m No sign, no letters... Just numbers.",
+		"Too few arguments.\033[0m",
+		"Too many arguments, bud!\033[0m",
 	};
+	const char	*guide
+		= "\n Remember the order: [🧐] [⏳💀] [⏳🍜] [⏳💤] [🍽️  (optional)]\n\n";
 
+	write(STDERR_FILENO, "\n \033[1;31m", 12);
 	write(STDERR_FILENO, msg[flag], len(msg[flag]));
+	write(STDERR_FILENO, guide, len(guide));
+}
+
+bool	non_digits(char **argv)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (argv[i])
+	{
+		j = 0;
+		while (argv[i][j] != '\0')
+		{
+			if ((argv[i][j] < '0' || argv[i][j] > '9'))
+				return (true);
+			j++;
+		}
+		i++;
+	}
+	return (false);
 }

@@ -5,7 +5,7 @@ FLAGS	= -Wall -Wextra -Werror -g3
 
 INCLUDE	= -I.
 
-SRC		= $(addprefix src/, philo.c initializer.c checker.c error.c \
+SRC		= $(addprefix src/, philo.c initializer.c waiter.c error.c \
 							utils.c dinner.c actions.c peek_i.c peek_ii.c)
 OBJ		= $(SRC:src/%.c=obj/%.o)
 
@@ -23,6 +23,12 @@ $(NAME): $(OBJ)
 obj/%.o:src/%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(FLAGS) $(INCLUDE) -c $< -o $@
+
+test: $(NAME)
+	@echo "$(WHT) \nRunning three tests:\n - Lonely philo\n - 4 philos, 1 death\n - No death, 7 meals\n$(DFL)"
+	./philo 1 800 200 200
+	./philo 4 310 200 100
+	./philo 5 800 200 200 7
 
 clean:
 	@rm -rf obj/

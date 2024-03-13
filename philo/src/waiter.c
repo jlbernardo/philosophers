@@ -1,27 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker.c                                          :+:      :+:    :+:   */
+/*   waiter.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Juliany Bernardo <julberna@student.42sp    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 16:43:08 by Juliany Ber       #+#    #+#             */
-/*   Updated: 2024/03/12 23:54:52 by Juliany Ber      ###   ########.fr       */
+/*   Updated: 2024/03/13 17:28:19 by Juliany Ber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-bool	reservation_mistake(int argc, char **argv)
-{
-	if (non_digits(argv))
-		philerror(argc, NON_DIGIT);
-	else if (argc > 6 || argc < 5)
-		philerror(argc, ARGS);
-	else
-		return (false);
-	return (true);
-}
 
 void	*restaurant_open(void *data)
 {
@@ -35,7 +24,7 @@ void	*restaurant_open(void *data)
 	while (nobody_died(diner, seats))
 	{
 		if (meals != __SIZE_MAX__
-			&& check_whos_full(diner, meals, seats) == seats)
+			&& full_guests(diner, meals, seats) == seats)
 			break ;
 	}
 	pthread_mutex_lock(&diner->peek[OPEN]);
@@ -61,7 +50,7 @@ bool	nobody_died(t_data *diner, size_t seats)
 	return (true);
 }
 
-size_t	check_whos_full(t_data *diner, size_t meals, size_t seats)
+size_t	full_guests(t_data *diner, size_t meals, size_t seats)
 {
 	size_t	i;
 	size_t	full_philos;

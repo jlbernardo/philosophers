@@ -6,7 +6,7 @@
 /*   By: Juliany Bernardo <julberna@student.42sp    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 16:03:44 by Juliany Ber       #+#    #+#             */
-/*   Updated: 2024/03/12 23:54:37 by Juliany Ber      ###   ########.fr       */
+/*   Updated: 2024/03/13 16:20:41 by Juliany Ber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@
 # define NEGATIVE	2
 
 /* error messages */
-# define TOO_FEW	0
-# define TOO_MANY	1
-# define NOT_NBR	2
+# define NOT_NBR	0
+# define TOO_FEW	1
+# define TOO_MANY	2
 
 /* philo states */
 # define EAT		0
@@ -37,9 +37,6 @@
 # define THINK		2
 # define GRAB		3
 # define DEAD		4
-
-/* loooooooooop */
-# define RESTAURAND_IS_OPEN_AND_SERVING	42
 
 typedef enum e_mutex
 {
@@ -101,7 +98,7 @@ bool	non_digits(char **argv);
 void	*restaurant_open(void *data);
 bool	nobody_died(t_data *diner, size_t seats);
 bool	reservation_mistake(int argc, char **argv);
-size_t	check_whos_full(t_data *diner, size_t meals, size_t seats);
+size_t	full_guests(t_data *diner, size_t meals, size_t seats);
 
 /* mutexes */
 size_t	philo_id(t_tab *philo);
@@ -121,6 +118,7 @@ void	message(int flag);
 void	philerror(int args, int flag);
 
 /* auxiliary functions */
+void	print_header(void);
 size_t	len(const char *str);
 size_t	atost(char *str);
 
