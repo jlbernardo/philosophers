@@ -6,14 +6,17 @@
 /*   By: Juliany Bernardo <julberna@student.42sp    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 13:47:02 by Juliany Ber       #+#    #+#             */
-/*   Updated: 2024/03/12 23:06:53 by Juliany Ber      ###   ########.fr       */
+/*   Updated: 2024/03/13 00:53:32 by Juliany Ber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+int	num_len(size_t time);
+
 size_t	print_state(int state, t_tab *philo)
 {
+	char		*s;
 	size_t		current_time;
 	const char	*message[5] = {
 		"is eating",
@@ -25,9 +28,11 @@ size_t	print_state(int state, t_tab *philo)
 
 	if (!diner_open(philo->diner))
 		return (0);
+	s = " ";
 	current_time = simulation_time(philo->diner);
 	pthread_mutex_lock(&philo->diner->print);
-	printf("%zu %zu %s\n", current_time, philo->id, message[state]);
+	printf("│ %zu%*s%zu%*s%-18s │\n", current_time, 8 - num_len(current_time),
+		s, philo->id, 6 - num_len(philo->id), s, message[state]);
 	pthread_mutex_unlock(&philo->diner->print);
 	return (current_time);
 }
@@ -62,6 +67,21 @@ size_t	len(const char *str)
 	len = 0;
 	while (str[len])
 		len++;
+	return (len);
+}
+
+int	num_len(size_t nbr)
+{
+	int	len;
+
+	len = 0;
+	if (nbr == 0)
+		return (1);
+	while (nbr > 0)
+	{
+		len++;
+		nbr /= 10;
+	}
 	return (len);
 }
 

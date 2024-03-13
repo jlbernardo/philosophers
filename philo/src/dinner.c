@@ -6,7 +6,7 @@
 /*   By: Juliany Bernardo <julberna@student.42sp    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 14:54:01 by Juliany Ber       #+#    #+#             */
-/*   Updated: 2024/03/12 23:26:38 by Juliany Ber      ###   ########.fr       */
+/*   Updated: 2024/03/13 00:38:52 by Juliany Ber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,5 @@ void	close_diner(t_data *diner)
 		pthread_mutex_destroy(&diner->peek[i]);
 	pthread_mutex_destroy(&diner->print);
 	free(diner->philo);
+	printf("└──────────────────────────────────┘\n");
 }
