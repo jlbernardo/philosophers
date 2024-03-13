@@ -6,24 +6,30 @@
 /*   By: Juliany Bernardo <julberna@student.42sp    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 13:47:02 by Juliany Ber       #+#    #+#             */
-/*   Updated: 2024/03/11 21:05:06 by Juliany Ber      ###   ########.fr       */
+/*   Updated: 2024/03/12 23:06:53 by Juliany Ber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	print_state(int state, t_tab *philo)
+size_t	print_state(int state, t_tab *philo)
 {
-	const char	*message[4] = {
+	size_t		current_time;
+	const char	*message[5] = {
 		"is eating",
 		"is sleeping",
 		"is thinking",
 		"has taken a hashi",
+		"died",
 	};
 
+	if (!diner_open(philo->diner))
+		return (0);
+	current_time = simulation_time(philo->diner);
 	pthread_mutex_lock(&philo->diner->print);
-	printf("%zu %s\n", philo->id, message[state]);
+	printf("%zu %zu %s\n", current_time, philo->id, message[state]);
 	pthread_mutex_unlock(&philo->diner->print);
+	return (current_time);
 }
 
 size_t	atost(char *str)
@@ -49,12 +55,32 @@ size_t	atost(char *str)
 	return (num);
 }
 
-int	len(const char *str)
+size_t	len(const char *str)
 {
-	int	len;
+	size_t	len;
 
 	len = 0;
 	while (str[len])
 		len++;
 	return (len);
+}
+
+bool	non_digits(char **argv)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (argv[i])
+	{
+		j = 0;
+		while (argv[i][j] != '\0')
+		{
+			if ((argv[i][j] < '0' || argv[i][j] > '9'))
+				return (true);
+			j++;
+		}
+		i++;
+	}
+	return (false);
 }

@@ -6,59 +6,72 @@
 /*   By: Juliany Bernardo <julberna@student.42sp    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 16:43:08 by Juliany Ber       #+#    #+#             */
-/*   Updated: 2024/03/11 21:07:11 by Juliany Ber      ###   ########.fr       */
+/*   Updated: 2024/03/12 23:54:52 by Juliany Ber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	reservation_mistake(int argc, char **argv)
+bool	reservation_mistake(int argc, char **argv)
 {
 	if (non_digits(argv))
 		philerror(argc, NON_DIGIT);
 	else if (argc > 6 || argc < 5)
 		philerror(argc, ARGS);
 	else
-		return (EXIT_SUCCESS);
-	return (EXIT_FAILURE);
+		return (false);
+	return (true);
 }
 
-int	non_digits(char **argv)
+void	*restaurant_open(void *data)
 {
-	int	i;
-	int	j;
+	size_t	seats;
+	size_t	meals;
+	t_data	*diner;
 
-	i = 1;
-	while (argv[i])
+	diner = (t_data *)data;
+	seats = seats_taken(diner);
+	meals = meals_hired(diner);
+	while (nobody_died(diner, seats))
 	{
-		j = 0;
-		while (argv[i][j] != '\0')
-		{
-			if ((argv[i][j] < '0' || argv[i][j] > '9'))
-				return (true);
-			j++;
-		}
-		i++;
+		if (meals != __SIZE_MAX__
+			&& check_whos_full(diner, meals, seats) == seats)
+			break ;
 	}
-	return (false);
+	pthread_mutex_lock(&diner->peek[OPEN]);
+	diner->open = false;
+	pthread_mutex_unlock(&diner->peek[OPEN]);
+	return (NULL);
 }
 
-int	restaurant_open(t_data *diner)
+bool	nobody_died(t_data *diner, size_t seats)
 {
 	size_t	i;
-	bool	open;
 
-	open = false;
-	i = 0;
-	while (i < diner->seats)
+	i = -1;
+	while (++i < seats)
 	{
-		if (diner->philo[i].plates < diner->meals_hired
-			|| diner->meals_hired == __SIZE_MAX__)
+		if (simulation_time(diner) - philo_last_meal(&diner->philo[i])
+			>= time_to_die(diner))
 		{
-			open = true;
-			break ;
+			print_state(DEAD, &diner->philo[i]);
+			return (false);
 		}
-		i++;
 	}
-	return (open);
+	return (true);
+}
+
+size_t	check_whos_full(t_data *diner, size_t meals, size_t seats)
+{
+	size_t	i;
+	size_t	full_philos;
+
+	i = -1;
+	full_philos = 0;
+	while (++i < seats)
+	{
+		if (philo_plates(&diner->philo[i]) >= meals)
+			full_philos++;
+	}
+	return (full_philos);
 }
