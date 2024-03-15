@@ -6,7 +6,7 @@
 /*   By: Juliany Bernardo <julberna@student.42sp    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 14:54:01 by Juliany Ber       #+#    #+#             */
-/*   Updated: 2024/03/13 16:16:02 by Juliany Ber      ###   ########.fr       */
+/*   Updated: 2024/03/14 18:03:14 by Juliany Ber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ void	*dinner(void *philo_tab)
 
 	philo = (t_tab *)philo_tab;
 	if (seats_taken(philo->diner) == 1)
+	{
+		print_state(GRAB, philo);
 		return (philo_tab);
+	}
 	while (diner_open(philo->diner))
 	{
 		eat(philo);
