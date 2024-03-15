@@ -6,7 +6,7 @@
 /*   By: Juliany Bernardo <julberna@student.42sp    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 20:46:37 by Juliany Ber       #+#    #+#             */
-/*   Updated: 2024/03/14 01:25:19 by Juliany Ber      ###   ########.fr       */
+/*   Updated: 2024/03/15 16:45:31 by Juliany Ber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,9 @@ void	register_guests(t_data *diner, int argc, char **argv)
 	diner->die_time = atost(argv[2]);
 	diner->eat_time = atost(argv[3]);
 	diner->sleep_time = atost(argv[4]);
-	diner->print = sem_open("print", O_CREAT, O_RDWR, 1);
-	diner->close = sem_open("close", O_CREAT, O_RDWR, 1);
-	diner->hashi = sem_open("hashi", O_CREAT, O_RDWR, diner->seats);
-	diner->philo = malloc(1 * sizeof(t_tab));
+	diner->print = sem_open("/print", O_CREAT | O_RDWR, 0666, 1);
+	diner->close = sem_open("/close", O_CREAT | O_RDWR, 0666, 0);
+	diner->hashi = sem_open("/hashi", O_CREAT | O_RDWR, 0666, diner->seats);
 }
 
 void	serve_tables(t_data *diner)
@@ -44,13 +43,14 @@ void	serve_tables(t_data *diner)
 		pid = fork();
 		if (pid == 0)
 		{
-			diner->philo->id = i;
-			diner->philo->plates = 0;
-			diner->philo->last_meal = 0;
-			diner->philo->sem_name = semaphore_name(i);
-			diner->check = sem_open(diner->philo->sem_name, O_CREAT, O_RDWR, 1);
-			pthread_create(&diner->philo->owner, NULL, &owner, (void *)diner);
-			pthread_detach(diner->philo->owner);
+			diner->philo.id = i;
+			diner->philo.plates = 0;
+			diner->philo.last_meal = 0;
+			diner->philo.sem_name = semaphore_name(i);
+			diner->check = sem_open(diner->philo.sem_name, O_CREAT | O_RDWR,
+					0666, 1);
+			pthread_create(&diner->philo.owner, NULL, &owner, (void *)diner);
+			pthread_detach(diner->philo.owner);
 			dinner(diner);
 		}
 	}
@@ -61,7 +61,7 @@ char	*semaphore_name(size_t philo_id)
 	int		size;
 	char	*name;
 
-	size = num_len(philo_id) + 1;
+	size = num_len(philo_id) + 3;
 	name = malloc(size * sizeof(char));
 	if (!name)
 		return (NULL);
@@ -72,6 +72,8 @@ char	*semaphore_name(size_t philo_id)
 		name[size] = philo_id % 10 + '0';
 		philo_id /= 10;
 	}
+	name[0] = '/';
+	name[1] = 's';
 	return (name);
 }
 

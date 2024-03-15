@@ -6,7 +6,7 @@
 /*   By: Juliany Bernardo <julberna@student.42sp    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 23:37:38 by Juliany Ber       #+#    #+#             */
-/*   Updated: 2024/03/14 00:41:27 by Juliany Ber      ###   ########.fr       */
+/*   Updated: 2024/03/14 21:46:31 by Juliany Ber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ size_t	print_state(int state, t_data *diner)
 		"💀 died",
 	};
 
-	if (diner_door(diner, CHECK))
-		return (0);
 	s = " ";
 	current_time = simulation_time(diner);
 	sem_wait(diner->print);
+	if (!diner_door(diner, CHECK))
+		return (0);
 	printf("│ %zu%*s%zu%*s%-22s │\n", current_time, 8 - num_len(current_time),
-		s, diner->philo->id, 6 - num_len(diner->philo->id), s, message[state]);
+		s, diner->philo.id, 6 - num_len(diner->philo.id), s, message[state]);
 	sem_post(diner->print);
 	return (current_time);
 }

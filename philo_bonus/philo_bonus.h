@@ -6,7 +6,7 @@
 /*   By: Juliany Bernardo <julberna@student.42sp    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 18:19:22 by Juliany Ber       #+#    #+#             */
-/*   Updated: 2024/03/14 01:08:36 by Juliany Ber      ###   ########.fr       */
+/*   Updated: 2024/03/15 16:45:13 by Juliany Ber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <fcntl.h>
 # include <stdio.h>
+# include <errno.h>
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -46,6 +47,15 @@
 # define CHECK		0
 # define CLOSE		1
 
+typedef struct s_tab
+{
+	char			*sem_name;
+	size_t			id;
+	size_t			plates;
+	size_t			last_meal;
+	pthread_t		owner;
+}				t_tab;
+
 typedef struct s_data
 {
 	bool			open;
@@ -59,17 +69,8 @@ typedef struct s_data
 	size_t			die_time;
 	size_t			start;
 	size_t			seats;
-	struct s_tab	*philo;
+	struct s_tab	philo;
 }				t_data;
-
-typedef struct s_tab
-{
-	char			*sem_name;
-	size_t			id;
-	size_t			plates;
-	size_t			last_meal;
-	pthread_t		owner;
-}				t_tab;
 
 void	print_header(void);
 void	dinner(t_data *diner);
