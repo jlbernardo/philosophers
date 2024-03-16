@@ -6,7 +6,7 @@ FLAGS	= -Wall -Wextra -Werror -g3
 INCLUDE	= -I.
 
 SRC		= $(addprefix src/, philo.c initializer.c dinner.c actions.c \
-							owner.c utils.c error.c)
+							utils.c error.c)
 
 OBJ		= $(SRC:src/%.c=obj/%.o)
 

@@ -6,7 +6,7 @@
 /*   By: Juliany Bernardo <julberna@student.42sp    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 20:46:37 by Juliany Ber       #+#    #+#             */
-/*   Updated: 2024/03/15 16:45:31 by Juliany Ber      ###   ########.fr       */
+/*   Updated: 2024/03/15 21:36:24 by Juliany Ber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,20 @@ void	register_guests(t_data *diner, int argc, char **argv)
 	else
 		diner->meals_hired = __SIZE_MAX__;
 	diner->open = true;
+	sem_unlink("/hashi");
+	sem_unlink("/print");
 	diner->seats = atost(argv[1]);
 	diner->die_time = atost(argv[2]);
 	diner->eat_time = atost(argv[3]);
 	diner->sleep_time = atost(argv[4]);
+	diner->pid = malloc(diner->seats * sizeof(int));
 	diner->print = sem_open("/print", O_CREAT | O_RDWR, 0666, 1);
-	diner->close = sem_open("/close", O_CREAT | O_RDWR, 0666, 0);
 	diner->hashi = sem_open("/hashi", O_CREAT | O_RDWR, 0666, diner->seats);
 }
 
 void	serve_tables(t_data *diner)
 {
 	size_t			i;
-	size_t			pid;
 	struct timeval	time;
 
 	i = -1;
@@ -40,41 +41,16 @@ void	serve_tables(t_data *diner)
 	diner->start = (time.tv_sec * 1000) + (time.tv_usec / 1000);
 	while (++i < diner->seats)
 	{
-		pid = fork();
-		if (pid == 0)
+		diner->pid[i] = fork();
+		if (diner->pid[i] == 0)
 		{
+			free(diner->pid);
 			diner->philo.id = i;
 			diner->philo.plates = 0;
 			diner->philo.last_meal = 0;
-			diner->philo.sem_name = semaphore_name(i);
-			diner->check = sem_open(diner->philo.sem_name, O_CREAT | O_RDWR,
-					0666, 1);
-			pthread_create(&diner->philo.owner, NULL, &owner, (void *)diner);
-			pthread_detach(diner->philo.owner);
 			dinner(diner);
 		}
 	}
-}
-
-char	*semaphore_name(size_t philo_id)
-{
-	int		size;
-	char	*name;
-
-	size = num_len(philo_id) + 3;
-	name = malloc(size * sizeof(char));
-	if (!name)
-		return (NULL);
-	name[--size] = '\0';
-	while (size > 0)
-	{
-		size--;
-		name[size] = philo_id % 10 + '0';
-		philo_id /= 10;
-	}
-	name[0] = '/';
-	name[1] = 's';
-	return (name);
 }
 
 void	print_header(void)

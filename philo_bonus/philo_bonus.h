@@ -6,7 +6,7 @@
 /*   By: Juliany Bernardo <julberna@student.42sp    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 18:19:22 by Juliany Ber       #+#    #+#             */
-/*   Updated: 2024/03/15 16:45:13 by Juliany Ber      ###   ########.fr       */
+/*   Updated: 2024/03/15 23:25:55 by Juliany Ber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,17 @@
 
 typedef struct s_tab
 {
-	char			*sem_name;
 	size_t			id;
 	size_t			plates;
 	size_t			last_meal;
-	pthread_t		owner;
 }				t_tab;
 
 typedef struct s_data
 {
+	int				*pid;
 	bool			open;
-	sem_t			*close;
 	sem_t			*print;
 	sem_t			*hashi;
-	sem_t			*check;
 	size_t			sleep_time;
 	size_t			meals_hired;
 	size_t			eat_time;
@@ -89,9 +86,8 @@ void	eat(t_data *diner);
 void	nap(t_data *diner);
 void	think(t_data *diner);
 void	what_am_i_feeling(t_data *diner);
-
 void	*owner(void *data);
-
+void	dream(t_data *diner);
 int		num_len(size_t nbr);
 size_t	atost(char *str);
 size_t	len(const char *str);
