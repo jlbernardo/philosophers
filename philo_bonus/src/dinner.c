@@ -6,7 +6,7 @@
 /*   By: Juliany Bernardo <julberna@student.42sp    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 22:49:46 by Juliany Ber       #+#    #+#             */
-/*   Updated: 2024/03/15 22:41:36 by Juliany Ber      ###   ########.fr       */
+/*   Updated: 2024/03/18 20:33:56 by Juliany Ber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,10 @@ void	dinner(t_data *diner)
 	if (diner->seats == 1)
 	{
 		print_state(GRAB, diner);
-		while (diner->open)
+		while (SERVING)
 			what_am_i_feeling(diner);
 	}
-	if (diner->philo.id % 2 == 0)
-		usleep(1000);
-	while (diner->open)
+	while (SERVING)
 	{
 		eat(diner);
 		nap(diner);
@@ -54,6 +52,6 @@ void	close_diner(t_data *diner)
 	sem_close(diner->print);
 	sem_unlink("/hashi");
 	sem_unlink("/print");
-	usleep(100000);
+	usleep(1000);
 	printf("└────────────────────────────────────┘\n");
 }

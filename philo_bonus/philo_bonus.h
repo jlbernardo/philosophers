@@ -6,7 +6,7 @@
 /*   By: Juliany Bernardo <julberna@student.42sp    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 18:19:22 by Juliany Ber       #+#    #+#             */
-/*   Updated: 2024/03/15 23:25:55 by Juliany Ber      ###   ########.fr       */
+/*   Updated: 2024/03/18 20:33:41 by Juliany Ber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,8 @@
 # define GRAB		3
 # define DEAD		4
 
-/* door flags */
-# define CHECK		0
-# define CLOSE		1
+/* loooooooooop */
+# define SERVING	42
 
 typedef struct s_tab
 {
@@ -57,7 +56,6 @@ typedef struct s_tab
 typedef struct s_data
 {
 	int				*pid;
-	bool			open;
 	sem_t			*print;
 	sem_t			*hashi;
 	size_t			sleep_time;
@@ -87,7 +85,7 @@ void	nap(t_data *diner);
 void	think(t_data *diner);
 void	what_am_i_feeling(t_data *diner);
 void	*owner(void *data);
-void	dream(t_data *diner);
+void	act(t_data *diner, size_t duration);
 int		num_len(size_t nbr);
 size_t	atost(char *str);
 size_t	len(const char *str);

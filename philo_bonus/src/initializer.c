@@ -6,7 +6,7 @@
 /*   By: Juliany Bernardo <julberna@student.42sp    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 20:46:37 by Juliany Ber       #+#    #+#             */
-/*   Updated: 2024/03/15 21:36:24 by Juliany Ber      ###   ########.fr       */
+/*   Updated: 2024/03/18 20:34:58 by Juliany Ber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	register_guests(t_data *diner, int argc, char **argv)
 		diner->meals_hired = atost(argv[5]);
 	else
 		diner->meals_hired = __SIZE_MAX__;
-	diner->open = true;
 	sem_unlink("/hashi");
 	sem_unlink("/print");
 	diner->seats = atost(argv[1]);
