@@ -1,6 +1,6 @@
 # Philosophers, the dining problem
 
-Imagine a group of philosophers enter a restaurant to have dinner together. They chose a sushi place, very famous in town for being ~edgy~. The funky thing about this place is that each guest receives one hashi (only one) and they have to switch and share in order to enjoy the delicious expensive food being served. How should they organize themselves?
+Imagine a group of philosophers enter a restaurant to have dinner together. They chose a sushi place, very famous in town for being \~edgy~. The funky thing about this place is that each guest receives one hashi (only one) and they have to switch and share in order to enjoy the delicious expensive food being served. How should they organize themselves?
 
 <p align="center">
   <img src="https://res.cloudinary.com/practicaldev/image/fetch/s---imrjIOF--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_350/https://res.cloudinary.com/studio-mogwai/image/upload/v1581865192/Untitled_Artwork_5.png" />
